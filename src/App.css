@@ -1,0 +1,339 @@
+/* src/App.css */
+
+:root {
+  --bg-dark: #0d0611;
+  --bg-purple: #2a0a2e;
+  --gold-light: #FFEA00;
+  --gold-dark: #FFC107;
+  --card-bg: rgba(253, 245, 230, 0.94);
+  --text-dark: #2c1810;
+  --text-gold: #b8860b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Georgia', serif;
+  background-color: var(--bg-dark);
+  background-image: radial-gradient(circle at 50% 30%, var(--bg-purple) 0%, var(--bg-dark) 70%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  color: var(--text-dark);
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- Fondo Mágico --- */
+.magic-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.twinkling-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #fff;
+  border-radius: 50%;
+  animation: twinkle linear infinite;
+  box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.6);
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+
+.bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.4;
+  animation: float 15s ease-in-out infinite alternate;
+}
+
+.orb-1 { width: 300px; height: 300px; background: #FFD700; top: -50px; left: -50px; animation-duration: 12s; }
+.orb-2 { width: 400px; height: 400px; background: #FF69B4; bottom: -100px; right: -100px; animation-duration: 18s; }
+.orb-3 { width: 200px; height: 200px; background: #FFA500; top: 50%; left: 10%; animation-duration: 20s; }
+
+@keyframes float {
+  from { transform: translateY(0px) translateX(0px) scale(1); }
+  to { transform: translateY(-30px) translateX(20px) scale(1.1); }
+}
+
+/* --- Estrellas Fugaces --- */
+.shooting-stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.shooting-star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+  animation: shoot 6s linear infinite;
+  opacity: 0;
+}
+
+.shooting-star::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, #fff, transparent);
+}
+
+@keyframes shoot {
+  0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 0; }
+  10% { opacity: 1; }
+  20% { transform: translateX(-300px) translateY(300px) rotate(-45deg); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.shooting-star:nth-child(1) { top: 10%; left: 80%; animation-delay: 0s; }
+.shooting-star:nth-child(2) { top: 30%; left: 90%; animation-delay: 1.5s; }
+.shooting-star:nth-child(3) { top: 50%; left: 70%; animation-delay: 3s; }
+.shooting-star:nth-child(4) { top: 20%; left: 60%; animation-delay: 4.5s; }
+.shooting-star:nth-child(5) { top: 70%; left: 85%; animation-delay: 2s; }
+.shooting-star:nth-child(6) { top: 15%; left: 40%; animation-delay: 5.5s; }
+.shooting-star:nth-child(7) { top: 60%; left: 50%; animation-delay: 1s; }
+
+/* --- Tarjeta Principal --- */
+.card {
+  background: var(--card-bg);
+  width: 100%;
+  max-width: 1200px;
+  border-radius: 40px;
+  padding: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 215, 0, 0.3);
+  animation: cardEntry 1.5s ease-out;
+  backdrop-filter: blur(10px);
+}
+
+@keyframes cardEntry {
+  from { opacity: 0; transform: translateY(50px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* --- Botones de Idioma --- */
+.language-switcher {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  display: flex;
+  gap: 10px;
+  z-index: 20;
+}
+
+.lang-btn {
+  background: transparent;
+  border: 1px solid rgba(184, 134, 11, 0.4);
+  border-radius: 20px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-family: 'Georgia', serif;
+  font-weight: bold;
+  color: var(--text-gold);
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.lang-btn:hover {
+  background: rgba(184, 134, 11, 0.1);
+}
+
+.lang-btn.active {
+  background: var(--text-gold);
+  color: white;
+  border-color: var(--text-gold);
+  box-shadow: 0 2px 8px rgba(184, 134, 11, 0.4);
+}
+
+/* --- Sección de Texto --- */
+.text-section {
+  flex: 1.2;
+  padding-right: 30px;
+  text-align: left;
+}
+
+.text-section h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.5rem;
+  color: var(--text-gold);
+  margin-bottom: 20px;
+  font-weight: 400;
+  line-height: 1.2;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.text-section p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  font-style: italic;
+  color: #4a3b32;
+  white-space: pre-line; /* Respeta los saltos de línea */
+}
+
+.love-text {
+  font-size: 1.2rem !important;
+  font-weight: bold;
+  color: #b8860b !important;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+/* --- Contador --- */
+.counter-section {
+  margin-top: 25px;
+  border-top: 2px solid rgba(184, 134, 11, 0.2);
+  padding-top: 15px;
+}
+
+.counter-section p {
+  font-size: 1rem;
+  font-style: normal;
+  margin-bottom: 5px;
+}
+
+.counter-timer {
+  font-family: 'Georgia', serif;
+  font-size: 1.2rem;
+  color: var(--text-gold);
+  font-weight: bold;
+  letter-spacing: 1px;
+  line-height: 1.5;
+}
+
+.love-you {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.5rem !important;
+  text-align: center;
+  color: #b8860b;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  font-style: normal !important;
+}
+
+.signature {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.8rem !important;
+  text-align: center;
+  color: #8b4513;
+  margin-top: 10px;
+  font-style: normal !important;
+}
+
+/* --- Sección del Ramo --- */
+.bouquet-section {
+  flex: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 550px;
+}
+
+.bouquet-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  animation: sway 5s ease-in-out infinite alternate;
+  transform-origin: bottom center;
+}
+
+@keyframes sway {
+  from { transform: rotate(-3deg); }
+  to { transform: rotate(3deg); }
+}
+
+.bouquet-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.2));
+}
+
+/* --- Flores Cayendo --- */
+.falling-flower {
+  position: fixed;
+  top: -100px;
+  z-index: 5;
+  pointer-events: none;
+  animation: fallAndSway linear infinite;
+  will-change: transform;
+  filter: drop-shadow(0 5px 15px rgba(255, 215, 0, 0.4));
+}
+
+@keyframes fallAndSway {
+  0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(110vh) translateX(50px) rotate(360deg); opacity: 0; }
+}
+
+/* --- Responsive --- */
+@media (max-width: 950px) {
+  .card {
+    flex-direction: column;
+    padding: 30px 20px;
+  }
+
+  .text-section {
+    padding-right: 0;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .bouquet-section {
+    height: 400px;
+  }
+  
+  .bouquet-container {
+    max-width: 300px;
+  }
+
+  .language-switcher {
+    top: 15px;
+    right: 20px;
+  }
+}
