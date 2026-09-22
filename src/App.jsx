@@ -7,6 +7,7 @@ const translations = {
     title: "Flores amarillas para el amor de mi vida.",
     p1: "Hoy te regalo flores amarillas, pero no son solo flores:\nson pedacitos de sol para decirte que tú eres mi primavera.",
     p2: "Si pudiera elegir un lugar seguro, sería a tu lado:\nel único sitio donde hasta el invierno florece.",
+    p3: "Te amo.",
     counterText: "Mi amor por ti comenzó hace",
     days: "amaneceres,",
     hours: "horas de luz,",
@@ -43,6 +44,10 @@ const translations = {
   }
 };
 
+// --- ¡AQUÍ ESTÁ LA MAGIA! ---
+// Obtenemos la ruta base configurada en vite.config.js
+const BASE = import.meta.env.BASE_URL; 
+
 // --- Componente de Flor Cayendo ---
 const FallingFlower = ({ style, imageSrc }) => (
   <img 
@@ -55,7 +60,12 @@ const FallingFlower = ({ style, imageSrc }) => (
 
 // --- Generador de Lluvia de Flores ---
 const generateFallingFlowers = (numFlowers) => {
-  const flowerImages = ['/FlorAmarilla.png', '/FlorAmarilla2.png', '/FlorAmarilla3.png'];
+  // Usamos BASE para construir las rutas correctas
+  const flowerImages = [
+    `${BASE}FlorAmarilla.png`, 
+    `${BASE}FlorAmarilla2.png`, 
+    `${BASE}FlorAmarilla3.png`
+  ];
 
   return Array.from({ length: numFlowers }).map((_, i) => {
     const size = Math.random() * 40 + 30;
@@ -99,7 +109,6 @@ function App() {
 
   // --- Lógica del Contador ---
   // Fecha de inicio: 11 de Mayo de 2018 (Formato: AAAA, MM-1, DD)
-  // Si fue en Noviembre, cambia el 4 por un 10
   const startDate = new Date(2018, 4, 11); 
 
   const [timeElapsed, setTimeElapsed] = useState({
@@ -125,7 +134,7 @@ function App() {
       setTimeElapsed({ days, hours, minutes, seconds });
     };
 
-    updateTimer(); // Ejecutar inmediatamente
+    updateTimer();
     const interval = setInterval(updateTimer, 1000);
     return () => clearInterval(interval);
   }, [startDate]);
@@ -190,8 +199,9 @@ function App() {
         {/* Sección del Ramo Completo */}
         <div className="bouquet-section">
           <div className="bouquet-container">
+            {/* Usamos BASE también aquí */}
             <img 
-              src="/FlorAmarillaRamoCompleto.png" 
+              src={`${BASE}FlorAmarillaRamoCompleto.png`} 
               alt="Ramo de Flores Amarillas Completo" 
               className="bouquet-image" 
             />
