@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import './App.css';
 
+// --- IMPORTAMOS LAS IMÁGENES ---
+// Al importarlas, Vite les asigna la ruta correcta automáticamente
+import flor1 from './assets/FlorAmarilla.png';
+import flor2 from './assets/FlorAmarilla2.png';
+import flor3 from './assets/FlorAmarilla3.png';
+import ramoCompleto from './assets/FlorAmarillaRamoCompleto.png';
+
 // --- Traducciones ---
 const translations = {
   es: {
@@ -44,10 +51,6 @@ const translations = {
   }
 };
 
-// --- ¡AQUÍ ESTÁ LA MAGIA! ---
-// Obtenemos la ruta base configurada en vite.config.js
-const BASE = import.meta.env.BASE_URL; 
-
 // --- Componente de Flor Cayendo ---
 const FallingFlower = ({ style, imageSrc }) => (
   <img 
@@ -60,12 +63,8 @@ const FallingFlower = ({ style, imageSrc }) => (
 
 // --- Generador de Lluvia de Flores ---
 const generateFallingFlowers = (numFlowers) => {
-  // Usamos BASE para construir las rutas correctas
-  const flowerImages = [
-    `${BASE}FlorAmarilla.png`, 
-    `${BASE}FlorAmarilla2.png`, 
-    `${BASE}FlorAmarilla3.png`
-  ];
+  // Usamos las variables importadas en lugar de strings
+  const flowerImages = [flor1, flor2, flor3];
 
   return Array.from({ length: numFlowers }).map((_, i) => {
     const size = Math.random() * 40 + 30;
@@ -108,17 +107,12 @@ function App() {
   const t = translations[lang];
 
   // --- Lógica del Contador ---
-  // Fecha de inicio: 11 de Mayo de 2018 (Formato: AAAA, MM-1, DD)
   const startDate = new Date(2018, 4, 11); 
-
   const [timeElapsed, setTimeElapsed] = useState({
     days: 0, hours: 0, minutes: 0, seconds: 0
   });
 
-  // Generamos 30 flores cayendo
   const fallingFlowers = useMemo(() => generateFallingFlowers(30), []);
-  
-  // Generamos 50 estrellas de fondo
   const stars = useMemo(() => generateStars(50), []);
 
   useEffect(() => {
@@ -141,7 +135,6 @@ function App() {
 
   return (
     <>
-      {/* Fondo Mágico */}
       <div className="magic-bg">
         {stars.map(star => <div key={star.id} className="twinkling-star" style={star.style} />)}
         <div className="bg-orb orb-1"></div>
@@ -149,7 +142,6 @@ function App() {
         <div className="bg-orb orb-3"></div>
       </div>
 
-      {/* Estrellas Fugaces */}
       <div className="shooting-stars">
         <div className="shooting-star"></div>
         <div className="shooting-star"></div>
@@ -160,22 +152,17 @@ function App() {
         <div className="shooting-star"></div>
       </div>
 
-      {/* Lluvia de Flores */}
       {fallingFlowers.map((flower) => (
         <FallingFlower key={flower.id} style={flower.style} imageSrc={flower.imageSrc} />
       ))}
       
-      {/* Tarjeta Principal */}
       <div className="card">
-        
-        {/* Botones de Idioma */}
         <div className="language-switcher">
           <button className={`lang-btn ${lang === 'es' ? 'active' : ''}`} onClick={() => setLang('es')}>ES</button>
           <button className={`lang-btn ${lang === 'en' ? 'active' : ''}`} onClick={() => setLang('en')}>EN</button>
           <button className={`lang-btn ${lang === 'fr' ? 'active' : ''}`} onClick={() => setLang('fr')}>FR</button>
         </div>
 
-        {/* Sección de Texto */}
         <div className="text-section">
           <h1>{t.title}</h1>
           <p>{t.p1}</p>
@@ -196,12 +183,11 @@ function App() {
           <p className="signature">{t.signature}</p>
         </div>
 
-        {/* Sección del Ramo Completo */}
         <div className="bouquet-section">
           <div className="bouquet-container">
-            {/* Usamos BASE también aquí */}
+            {/* Usamos la variable importada aquí también */}
             <img 
-              src={`${BASE}FlorAmarillaRamoCompleto.png`} 
+              src={ramoCompleto} 
               alt="Ramo de Flores Amarillas Completo" 
               className="bouquet-image" 
             />
